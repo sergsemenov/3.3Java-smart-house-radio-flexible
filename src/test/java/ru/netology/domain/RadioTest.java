@@ -8,21 +8,19 @@ class RadioTest {
 
     @Test
     public void desiredChannel() {
-        Radio radio = new Radio();
-        radio.setCurrentChannel(5);
-        assertEquals(5, radio.getCurrentChannel());
-    }
-
-    @Test
-    // принесли пульт с возможностью ввода многозначных и отрицательных номеров каналов
-    public void desiredChannelNNN() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(499);
         radio.setCurrentChannel(500);
-        assertEquals(9, radio.getCurrentChannel());
+        assertEquals(499, radio.getCurrentChannel());
     }
 
     @Test
-    // принесли пульт с возможностью ввода многозначных и отрицательных номеров каналов
+    public void desiredChannelNNN() {
+        Radio radio = new Radio(123456789);
+        radio.setCurrentChannel(500);
+        assertEquals(500, radio.getCurrentChannel());
+    }
+
+    @Test
     public void desiredChannelMinusNNN() {
         Radio radio = new Radio();
         radio.setCurrentChannel(-500);
@@ -31,25 +29,23 @@ class RadioTest {
 
     @Test
     public void nextChannel() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(99);
         radio.setCurrentChannel(5);
         radio.increaseChannel();
         assertEquals(6, radio.getCurrentChannel());
     }
 
     @Test
-    // принесли пульт с возможностью ввода многозначных и отрицательных номеров каналов
     public void nextChannelFromNNN() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(501);
         radio.setCurrentChannel(500);
         radio.increaseChannel();
-        assertEquals(0, radio.getCurrentChannel());
+        assertEquals(501, radio.getCurrentChannel());
     }
 
     @Test
-    // принесли пульт с возможностью ввода многозначных и отрицательных номеров каналов
     public void nextChannelFromMinusNNN() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(5);
         radio.setCurrentChannel(-500);
         radio.increaseChannel();
         assertEquals(1, radio.getCurrentChannel());
@@ -65,41 +61,39 @@ class RadioTest {
 
     @Test
     public void previousChannel() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(5);
         radio.setCurrentChannel(5);
         radio.decreaseChannel();
         assertEquals(4, radio.getCurrentChannel());
     }
 
     @Test
-    // принесли пульт с возможностью ввода многозначных и отрицательных номеров каналов
     public void previousChannelFromNNN() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(499);
         radio.setCurrentChannel(500);
         radio.decreaseChannel();
-        assertEquals(8, radio.getCurrentChannel());
+        assertEquals(498, radio.getCurrentChannel());
     }
 
     @Test
-    // принесли пульт с возможностью ввода многозначных и отрицательных номеров каналов
     public void previousChannelFromMinusNNN() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(11);
         radio.setCurrentChannel(-500);
         radio.decreaseChannel();
-        assertEquals(9, radio.getCurrentChannel());
+        assertEquals(11, radio.getCurrentChannel());
     }
 
     @Test
     public void previousChannelFromMinChannel() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(6);
         radio.setCurrentChannel(0);
         radio.decreaseChannel();
-        assertEquals(9, radio.getCurrentChannel());
+        assertEquals(6, radio.getCurrentChannel());
     }
 
     @Test
     public void increaseVolume() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(200);
         radio.setCurrentVolume(4);
         radio.increaseVolume();
         assertEquals(5, radio.getCurrentVolume());
@@ -110,7 +104,7 @@ class RadioTest {
         Radio radio = new Radio();
         radio.setCurrentVolume(500);
         radio.increaseVolume();
-        assertEquals(10, radio.getCurrentVolume());
+        assertEquals(100, radio.getCurrentVolume());
     }
 
     @Test
@@ -124,9 +118,9 @@ class RadioTest {
     @Test
     public void increaseVolumeFromMaxVolume() {
         Radio radio = new Radio();
-        radio.setCurrentVolume(10);
+        radio.setCurrentVolume(100);
         radio.increaseVolume();
-        assertEquals(10, radio.getCurrentVolume());
+        assertEquals(100, radio.getCurrentVolume());
     }
 
     @Test
@@ -142,7 +136,7 @@ class RadioTest {
         Radio radio = new Radio();
         radio.setCurrentVolume(500);
         radio.decreaseVolume();
-        assertEquals(9, radio.getCurrentVolume());
+        assertEquals(99, radio.getCurrentVolume());
     }
 
     @Test
