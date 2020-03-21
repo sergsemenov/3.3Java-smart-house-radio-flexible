@@ -1,5 +1,13 @@
 package ru.netology.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class Radio {
     private final int maxVolume = 100;
     private final int minVolume = 0;
@@ -7,15 +15,6 @@ public class Radio {
     private final int minChannel = 0;
     private int currentVolume;
     private int currentChannel;
-
-    public Radio(int maxChannel) {
-        this.maxChannel = maxChannel;
-    }
-
-    public Radio() {
-        // дефолтное значение количества станций
-        this.maxChannel = maxChannel;
-    }
 
     public void increaseVolume() {
         if (currentVolume == maxVolume) {
@@ -45,54 +44,5 @@ public class Radio {
             return;
         }
         currentChannel--;
-    }
-
-    public int getMaxVolume() {
-        return maxVolume;
-    }
-
-    public int getMinVolume() {
-        return minVolume;
-    }
-
-    public int getCurrentVolume() {
-        return currentVolume;
-    }
-
-    public void setCurrentVolume(int currentVolume) {
-        if (currentVolume > maxVolume) {
-            //внимание, пользователь может оглохнуть при включении!
-            this.currentVolume = maxVolume;
-            return;
-        }
-        if (currentVolume < minVolume) {
-            this.currentVolume = minVolume;
-            return;
-        }
-        this.currentVolume = currentVolume;
-    }
-
-    public int getMaxChannel() {
-        return maxChannel;
-    }
-
-    public int getMinChannel() {
-        return minChannel;
-    }
-
-    public int getCurrentChannel() {
-        return currentChannel;
-    }
-
-    public void setCurrentChannel(int currentChannel) {
-        if (currentChannel > maxChannel) {
-            this.currentChannel = maxChannel;
-            return;
-        }
-        if (currentChannel < minChannel) {
-            this.currentChannel = minChannel;
-            return;
-        }
-        this.currentChannel = currentChannel;
     }
 }

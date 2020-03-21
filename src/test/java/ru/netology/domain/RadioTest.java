@@ -7,151 +7,93 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class RadioTest {
 
     @Test
-    public void desiredChannel() {
-        Radio radio = new Radio(499);
-        radio.setCurrentChannel(500);
-        assertEquals(499, radio.getCurrentChannel());
-    }
-
-    @Test
-    public void desiredChannelNNN() {
-        Radio radio = new Radio(123456789);
-        radio.setCurrentChannel(500);
-        assertEquals(500, radio.getCurrentChannel());
-    }
-
-    @Test
-    public void desiredChannelMinusNNN() {
+    public void noArgsAllByDefault() {
         Radio radio = new Radio();
-        radio.setCurrentChannel(-500);
-        assertEquals(0, radio.getCurrentChannel());
+        radio.increaseVolume();
+        radio.increaseVolume();
+        radio.decreaseVolume();
+        radio.increaseChannel();
+        radio.increaseChannel();
+        radio.increaseChannel();
+        radio.decreaseChannel();
+        assertEquals(2, radio.getCurrentChannel());
+        assertEquals(1, radio.getCurrentVolume());
+        assertEquals(9, radio.getMaxChannel());
+        assertEquals(0, radio.getMinChannel());
+        assertEquals(100, radio.getMaxVolume());
+        assertEquals(0, radio.getMinVolume());
     }
 
     @Test
     public void nextChannel() {
-        Radio radio = new Radio(99);
-        radio.setCurrentChannel(5);
+        Radio radio = new Radio(50, 55, 10);
         radio.increaseChannel();
-        assertEquals(6, radio.getCurrentChannel());
+        assertEquals(11, radio.getCurrentChannel());
+        assertEquals(55, radio.getCurrentVolume());
+        assertEquals(50, radio.getMaxChannel());
     }
-
     @Test
-    public void nextChannelFromNNN() {
-        Radio radio = new Radio(501);
-        radio.setCurrentChannel(500);
-        radio.increaseChannel();
-        assertEquals(501, radio.getCurrentChannel());
-    }
-
-    @Test
-    public void nextChannelFromMinusNNN() {
-        Radio radio = new Radio(5);
-        radio.setCurrentChannel(-500);
-        radio.increaseChannel();
-        assertEquals(1, radio.getCurrentChannel());
-    }
-
-    @Test
-    public void nextChannelFromMaxChannel() {
-        Radio radio = new Radio();
-        radio.setCurrentChannel(9);
+    public void nextChannelFromMax() {
+        Radio radio = new Radio(50, 0, 50);
         radio.increaseChannel();
         assertEquals(0, radio.getCurrentChannel());
+        assertEquals(0, radio.getCurrentVolume());
+        assertEquals(50, radio.getMaxChannel());
     }
 
     @Test
     public void previousChannel() {
-        Radio radio = new Radio(5);
-        radio.setCurrentChannel(5);
+        Radio radio = new Radio(100, 33, 100);
         radio.decreaseChannel();
-        assertEquals(4, radio.getCurrentChannel());
+        assertEquals(99, radio.getCurrentChannel());
+        assertEquals(33, radio.getCurrentVolume());
+        assertEquals(100, radio.getMaxChannel());
     }
 
     @Test
-    public void previousChannelFromNNN() {
-        Radio radio = new Radio(499);
-        radio.setCurrentChannel(500);
+    public void previousChannelFromMin() {
+        Radio radio = new Radio(100, 33, 0);
         radio.decreaseChannel();
-        assertEquals(498, radio.getCurrentChannel());
+        assertEquals(100, radio.getCurrentChannel());
+        assertEquals(33, radio.getCurrentVolume());
+        assertEquals(100, radio.getMaxChannel());
     }
 
     @Test
-    public void previousChannelFromMinusNNN() {
-        Radio radio = new Radio(11);
-        radio.setCurrentChannel(-500);
-        radio.decreaseChannel();
-        assertEquals(11, radio.getCurrentChannel());
-    }
-
-    @Test
-    public void previousChannelFromMinChannel() {
-        Radio radio = new Radio(6);
-        radio.setCurrentChannel(0);
-        radio.decreaseChannel();
-        assertEquals(6, radio.getCurrentChannel());
-    }
-
-    @Test
-    public void increaseVolume() {
-        Radio radio = new Radio(200);
-        radio.setCurrentVolume(4);
+    public void turnVolumeUp() {
+        Radio radio = new Radio(50, 99, 10);
         radio.increaseVolume();
-        assertEquals(5, radio.getCurrentVolume());
-    }
-
-    @Test
-    public void increaseVolumeFromNNN() {
-        Radio radio = new Radio();
-        radio.setCurrentVolume(500);
-        radio.increaseVolume();
+        assertEquals(10, radio.getCurrentChannel());
         assertEquals(100, radio.getCurrentVolume());
+        assertEquals(50, radio.getMaxChannel());
     }
 
     @Test
-    public void increaseVolumeFromMinusNNN() {
-        Radio radio = new Radio();
-        radio.setCurrentVolume(-500);
+    public void turnVolumeUpFromMax() {
+        Radio radio = new Radio(50, 100, 10);
         radio.increaseVolume();
-        assertEquals(1, radio.getCurrentVolume());
-    }
-
-    @Test
-    public void increaseVolumeFromMaxVolume() {
-        Radio radio = new Radio();
-        radio.setCurrentVolume(100);
-        radio.increaseVolume();
+        assertEquals(10, radio.getCurrentChannel());
         assertEquals(100, radio.getCurrentVolume());
+        assertEquals(50, radio.getMaxChannel());
     }
 
     @Test
-    public void decreaseVolume() {
-        Radio radio = new Radio();
-        radio.setCurrentVolume(4);
+    public void turnVolumeDown() {
+        Radio radio = new Radio(50, 1, 10);
         radio.decreaseVolume();
-        assertEquals(3, radio.getCurrentVolume());
-    }
-
-    @Test
-    public void decreaseVolumeFromNNN() {
-        Radio radio = new Radio();
-        radio.setCurrentVolume(500);
-        radio.decreaseVolume();
-        assertEquals(99, radio.getCurrentVolume());
-    }
-
-    @Test
-    public void decreaseVolumeFromMinusNNN() {
-        Radio radio = new Radio();
-        radio.setCurrentVolume(-500);
-        radio.decreaseVolume();
+        assertEquals(10, radio.getCurrentChannel());
         assertEquals(0, radio.getCurrentVolume());
+        assertEquals(50, radio.getMaxChannel());
     }
 
     @Test
-    public void decreaseVolumeFromMinVolume() {
-        Radio radio = new Radio();
-        radio.setCurrentVolume(0);
+    public void turnVolumeDownFromMin() {
+        Radio radio = new Radio(50, 0, 10);
         radio.decreaseVolume();
+        assertEquals(10, radio.getCurrentChannel());
         assertEquals(0, radio.getCurrentVolume());
+        assertEquals(50, radio.getMaxChannel());
     }
+
 }
+
