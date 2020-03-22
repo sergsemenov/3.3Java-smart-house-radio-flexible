@@ -17,30 +17,46 @@ public class Radio {
     private int currentChannel;
 
     public void increaseVolume() {
-        if (currentVolume == maxVolume) {
+        if (currentVolume >= maxVolume) {
+            currentVolume = maxVolume;
             return;
+        }
+        if (currentVolume <= minVolume) {
+            currentVolume = minVolume;
         }
         currentVolume++;
     }
 
     public void decreaseVolume() {
-        if (currentVolume == minVolume) {
+        if (currentVolume <= minVolume) {
+            currentVolume = minVolume;
             return;
+        }
+        if (currentVolume > maxVolume) {
+            currentVolume = maxVolume;
         }
         currentVolume--;
     }
 
     public void increaseChannel() {
-        if (currentChannel == maxChannel) {
-            this.currentChannel = minChannel;
+        if (currentChannel < minChannel) {
+            currentChannel = minChannel;
+            return;
+        }
+        if (currentChannel >= maxChannel) {
+            currentChannel = minChannel;
             return;
         }
         currentChannel++;
     }
 
     public void decreaseChannel() {
-        if (currentChannel == minChannel) {
-            this.currentChannel = maxChannel;
+        if (currentChannel > maxChannel) {
+            currentChannel = maxChannel;
+            return;
+        }
+        if (currentChannel <= minChannel) {
+            currentChannel = maxChannel;
             return;
         }
         currentChannel--;
