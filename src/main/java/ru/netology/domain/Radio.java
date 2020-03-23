@@ -1,89 +1,64 @@
 package ru.netology.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class Radio {
-    private final int maxVolume = 10;
+    private final int maxVolume = 100;
     private final int minVolume = 0;
-    private final int maxChannel = 9;
+    private int maxChannel = 9;
     private final int minChannel = 0;
     private int currentVolume;
     private int currentChannel;
 
     public void increaseVolume() {
-        if (currentVolume == maxVolume) {
+        if (currentVolume >= maxVolume) {
+            currentVolume = maxVolume;
             return;
+        }
+        if (currentVolume <= minVolume) {
+            currentVolume = minVolume;
         }
         currentVolume++;
     }
 
     public void decreaseVolume() {
-        if (currentVolume == minVolume) {
+        if (currentVolume <= minVolume) {
+            currentVolume = minVolume;
             return;
+        }
+        if (currentVolume > maxVolume) {
+            currentVolume = maxVolume;
         }
         currentVolume--;
     }
 
     public void increaseChannel() {
-        if (currentChannel == maxChannel) {
-            this.currentChannel = minChannel;
+        if (currentChannel < minChannel) {
+            currentChannel = minChannel;
+            return;
+        }
+        if (currentChannel >= maxChannel) {
+            currentChannel = minChannel;
             return;
         }
         currentChannel++;
     }
 
     public void decreaseChannel() {
-        if (currentChannel == minChannel) {
-            this.currentChannel = maxChannel;
+        if (currentChannel > maxChannel) {
+            currentChannel = maxChannel;
+            return;
+        }
+        if (currentChannel <= minChannel) {
+            currentChannel = maxChannel;
             return;
         }
         currentChannel--;
-    }
-
-    public int getMaxVolume() {
-        return maxVolume;
-    }
-
-    public int getMinVolume() {
-        return minVolume;
-    }
-
-    public int getCurrentVolume() {
-        return currentVolume;
-    }
-
-    public void setCurrentVolume(int currentVolume) {
-        if (currentVolume > maxVolume) {
-            //внимание, пользователь может оглохнуть при включении!
-            this.currentVolume = maxVolume;
-            return;
-        }
-        if (currentVolume < minVolume) {
-            this.currentVolume = minVolume;
-            return;
-        }
-        this.currentVolume = currentVolume;
-    }
-
-    public int getMaxChannel() {
-        return maxChannel;
-    }
-
-    public int getMinChannel() {
-        return minChannel;
-    }
-
-    public int getCurrentChannel() {
-        return currentChannel;
-    }
-
-    public void setCurrentChannel(int currentChannel) {
-        if (currentChannel > maxChannel) {
-            this.currentChannel = maxChannel;
-            return;
-        }
-        if (currentChannel < minChannel) {
-            this.currentChannel = minChannel;
-            return;
-        }
-        this.currentChannel = currentChannel;
     }
 }
